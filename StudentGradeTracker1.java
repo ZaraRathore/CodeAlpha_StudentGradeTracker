@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.table.DefaultTableModel;//ye table ka data manage kare gi 
 
 public class StudentGradeTracker1 extends JFrame {
@@ -15,13 +19,39 @@ public class StudentGradeTracker1 extends JFrame {
     private JLabel lowestLabel;
     private JLabel countLabel;
     private JTextArea summaryArea;
+    private BufferedImage backgroundImage;
+
+    class BackgroundPanel extends JPanel {
+        public BackgroundPanel(LayoutManager layout) {
+            super(layout);
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        }
+    }
 
     public StudentGradeTracker1() {
         setTitle("Student Grade Tracker - CodeAlpha");// ye title hoga window ka.
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        try {
+            backgroundImage = ImageIO.read(new File("img5.png"));
+        } catch (IOException e) {
+            System.out.println("Could not load background image: " + e.getMessage());
+        }
+
+        BackgroundPanel contentPanel = new BackgroundPanel(new BorderLayout());
+        setContentPane(contentPanel);
+
         JPanel inputPanel = new JPanel(new FlowLayout());
+        inputPanel.setOpaque(false);
         inputPanel.setBorder(BorderFactory.createTitledBorder("Add Student"));
 
         nameField = new JTextField(10);
@@ -55,14 +85,21 @@ public class StudentGradeTracker1 extends JFrame {
         table = new JTable(tableModel);
         table.setRowHeight(25);
         table.getTableHeader().setReorderingAllowed(false);
-        return new JScrollPane(table);
+        table.setOpaque(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        return scrollPane;
     }
+    
 
-   private JPanel buildSummaryPanel() {
+ private JPanel buildSummaryPanel() {
         JPanel summaryPanel = new JPanel(new BorderLayout());
+        summaryPanel.setOpaque(false);
         summaryPanel.setBorder(BorderFactory.createTitledBorder("Summary"));
 
         JPanel labelsPanel = new JPanel(new GridLayout(4, 1));
+        labelsPanel.setOpaque(false);
         avgLabel = new JLabel("Average Grade: N/A");
         highestLabel = new JLabel("Highest Grade: N/A");
         lowestLabel = new JLabel("Lowest Grade: N/A");
@@ -76,9 +113,13 @@ public class StudentGradeTracker1 extends JFrame {
         summaryArea.setEditable(false);
         summaryArea.setLineWrap(true);
         summaryArea.setWrapStyleWord(true);
+        summaryArea.setOpaque(false);
 
         summaryPanel.add(labelsPanel, BorderLayout.NORTH);
-        summaryPanel.add(new JScrollPane(summaryArea), BorderLayout.CENTER);
+        JScrollPane summaryScroll = new JScrollPane(summaryArea);
+        summaryScroll.setOpaque(false);
+        summaryScroll.getViewport().setOpaque(false);
+        summaryPanel.add(summaryScroll, BorderLayout.CENTER);
         return summaryPanel;
     }
 
