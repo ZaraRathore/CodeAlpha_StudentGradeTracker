@@ -58,23 +58,27 @@ public class StudentGradeTracker1 extends JFrame {
         return new JScrollPane(table);
     }
 
-    private JPanel buildSummaryPanel() {
-        JPanel summaryPanel = new JPanel();
-        summaryPanel.setLayout(new GridLayout(5, 1));
+   private JPanel buildSummaryPanel() {
+        JPanel summaryPanel = new JPanel(new BorderLayout());
         summaryPanel.setBorder(BorderFactory.createTitledBorder("Summary"));
+
+        JPanel labelsPanel = new JPanel(new GridLayout(4, 1));
         avgLabel = new JLabel("Average Grade: N/A");
         highestLabel = new JLabel("Highest Grade: N/A");
         lowestLabel = new JLabel("Lowest Grade: N/A");
         countLabel = new JLabel("Total Students: 0");
-        summaryArea = new JTextArea();
+        labelsPanel.add(avgLabel);
+        labelsPanel.add(highestLabel);
+        labelsPanel.add(lowestLabel);
+        labelsPanel.add(countLabel);
+
+        summaryArea = new JTextArea(6, 20);
         summaryArea.setEditable(false);
         summaryArea.setLineWrap(true);
         summaryArea.setWrapStyleWord(true);
-        summaryPanel.add(avgLabel);
-        summaryPanel.add(highestLabel);
-        summaryPanel.add(lowestLabel);
-        summaryPanel.add(countLabel);
-        summaryPanel.add(new JScrollPane(summaryArea));
+
+        summaryPanel.add(labelsPanel, BorderLayout.NORTH);
+        summaryPanel.add(new JScrollPane(summaryArea), BorderLayout.CENTER);
         return summaryPanel;
     }
 
