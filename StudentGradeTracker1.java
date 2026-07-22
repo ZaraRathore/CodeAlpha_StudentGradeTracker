@@ -39,7 +39,7 @@ public class StudentGradeTracker1 extends JFrame {
     public StudentGradeTracker1() {
         setTitle("Student Grade Tracker - CodeAlpha");// ye title hoga window ka.
         setSize(800, 600);
-       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {
             backgroundImage = ImageIO.read(new File("img5.png"));
@@ -59,9 +59,14 @@ public class StudentGradeTracker1 extends JFrame {
         JButton addButton = new JButton("Add Student");
         JButton removeButton = new JButton("Remove Student");
         JButton clearButton = new JButton("Clear All");
-        inputPanel.add(new JLabel("Name:"));
+        JLabel nameLbl = new JLabel("Name:");
+        nameLbl.setForeground(Color.WHITE);
+        JLabel gradeLbl = new JLabel("Grade: 0-100");
+        gradeLbl.setForeground(Color.WHITE);
+
+        inputPanel.add(nameLbl);
         inputPanel.add(nameField);
-        inputPanel.add(new JLabel("Grade: 0-100"));
+        inputPanel.add(gradeLbl);
         inputPanel.add(gradeField);
         inputPanel.add(addButton);
         inputPanel.add(removeButton);
@@ -91,9 +96,8 @@ public class StudentGradeTracker1 extends JFrame {
         scrollPane.getViewport().setOpaque(false);
         return scrollPane;
     }
-    
 
- private JPanel buildSummaryPanel() {
+    private JPanel buildSummaryPanel() {
         JPanel summaryPanel = new JPanel(new BorderLayout());
         summaryPanel.setOpaque(false);
         summaryPanel.setBorder(BorderFactory.createTitledBorder("Summary"));
@@ -104,6 +108,10 @@ public class StudentGradeTracker1 extends JFrame {
         highestLabel = new JLabel("Highest Grade: N/A");
         lowestLabel = new JLabel("Lowest Grade: N/A");
         countLabel = new JLabel("Total Students: 0");
+        avgLabel.setForeground(Color.WHITE);
+        highestLabel.setForeground(Color.WHITE);
+        lowestLabel.setForeground(Color.WHITE);
+        countLabel.setForeground(Color.WHITE);
         labelsPanel.add(avgLabel);
         labelsPanel.add(highestLabel);
         labelsPanel.add(lowestLabel);
@@ -114,6 +122,8 @@ public class StudentGradeTracker1 extends JFrame {
         summaryArea.setLineWrap(true);
         summaryArea.setWrapStyleWord(true);
         summaryArea.setOpaque(false);
+        summaryArea.setForeground(Color.WHITE);
+        summaryArea.setDisabledTextColor(Color.WHITE);
 
         summaryPanel.add(labelsPanel, BorderLayout.NORTH);
         JScrollPane summaryScroll = new JScrollPane(summaryArea);
